@@ -1,19 +1,36 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from 'react';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import Login from './Screens/login';
+import Home from './Screens/home';
+
+const RootStack = createStackNavigator(
+  {
+    Home: Home,
+    Login: Login,
+  },
+  {
+    initialRouteName: 'Login',
+    defaultNavigationOptions: {
+    headerStyle: {
+      backgroundColor: '#1A535C',
+      zIndex: 100,
+      height: 100,
+    },
+    headerBackTitle: 'Back',
+    headerTintColor: 'white',
+    headerTitleStyle: {
+    fontSize: 30,
+    color: 'white',
+    },
+  },
+});
+
+const AppContainer = createAppContainer(RootStack);
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>This is messenger App</Text>
-    </View>
+    <AppContainer />
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
