@@ -19,10 +19,14 @@ export default function Intro(props) {
         underlineColorAndroid = "transparent"
         placeholder = "Password"
         placeholderTextColor = "grey"
-        secureTextEntry = 'true'/>
+        secureTextEntry={true}/>
       <Button  style={ styles.submitButton } 
         onPress={() => { props.navigation.navigate('Home') }}>
-        <Text style = {styles.submitButtonText}>Submit</Text>
+        <Text style = {styles.buttonText}>Login</Text>
+      </Button>
+      <Button  style={ styles.guestButton } 
+        onPress={() => { props.navigation.navigate('Home') }}>
+        <Text style = {styles.buttonText}>Login As Guest</Text>
       </Button>
     </View>
     </KeyboardAvoidingView>
@@ -37,8 +41,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FCFCFC',
   },
   text: {
-    textAlign: 'left',
-    color: 'black',
+    color: 'grey',
     padding: 10,
  },
  input: {
@@ -56,8 +59,14 @@ const styles = StyleSheet.create({
     height: 40,
     marginLeft:  Dimensions.get('window').width / 1.5,
  },
- submitButtonText:{
+ guestButton: {
+  backgroundColor: '#DD6E42',
+  padding: 20,
+  height: 40,
+  marginTop: -40,
+  marginLeft:  -Dimensions.get('window').width / 1.8,
+ },
+ buttonText:{
     color: 'white',
-    textAlign: 'center',
  }
 });
