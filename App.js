@@ -16,8 +16,6 @@ const RootStack = createStackNavigator(
     defaultNavigationOptions: {
     headerStyle: {
       backgroundColor: '#1A535C',
-      zIndex: 100,
-      // height: 100,
     },
     headerBackTitle: 'Back',
     headerTintColor: 'white',
@@ -30,9 +28,11 @@ const RootStack = createStackNavigator(
 
 const AppContainer = createAppContainer(RootStack);
 
-export default function App() {
-  return (
-    <AppContainer />
-  );
+export default class App extends React.Component {
+  render(){
+    return (
+      <AppContainer />
+    );
+  }
 }
 

@@ -1,51 +1,56 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, Dimensions, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import {KeyboardAvoidingView, Platform } from 'react-native';
+import Fire from '../fire';
+import {GiftedChat} from 'react-native-gifted-chat';
 
-export default function ChatRoom(props) {
-  return (
-    <KeyboardAvoidingView style = {{ flex: 1 }} behavior="padding">
-    <View style={styles.container}>  
-      <View style={styles.inputContainer}>
-        <TextInput style = {styles.input}
-          underlineColorAndroid = "transparent"
-          placeholder = "send Message"
-          placeholderTextColor = "grey"/>
-        <TouchableOpacity style={styles.control} onPress={() => { props.navigation.navigate('Home') }} >
-          <Ionicons name='md-send' size={48} color='#444' />
-        </TouchableOpacity>
-      </View>
-    </View>
-    </KeyboardAvoidingView>
-  );
-}
+export default class ChatRoom extends React.Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: (navigation.state.params || {}).name || 'ChatRoom',
+  });
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
-  input: {
-    marginBottom: 25,
-    marginLeft: 5,
-    width: Dimensions.get('window').width / 1.1,
-    borderColor: 'white',
-    borderBottomColor: 'black',
-    borderWidth: 1,
- },
-    inputContainer: {
-    marginBottom: 80,
- },
- control: {
-    margin: 20,
-    color: 'white',
-    marginBottom: 50,
-    marginTop: -80,
-    marginLeft: Dimensions.get('window').width / 1.2,
- },
- getStartedButtonText: {
-    color: 'white',
+  state = {
+    messages: [],
+  };
+
+  get user() {
+    return {
+      name: this.props.navigation.state.params.name,
+      _id: Fire.shared.uid,
+    };
   }
-});
+
+  render() {
+      if( Platform.OS == "android" ){
+        return (
+          <KeyboardAvoidingView style={{flex: 1}} behavior="height" keyboardVerticalOffset={70} enabled>
+           <GiftedChat
+            messages={this.state.messages}
+            onSend={Fire.shared.send}
+            user={this.user}
+            />
+        </KeyboardAvoidingView>
+        );
+      }
+    return (
+      <KeyboardAvoidingView style={{flex: 1}} behavior="padding" >
+        <GiftedChat
+          messages={this.state.messages}
+          onSend={Fire.shared.send}
+          user={this.user}
+        />
+      </KeyboardAvoidingView>
+    );
+  }
+
+  componentDidMount() {
+    Fire.shared.on(message =>
+      this.setState(previousState => ({
+        messages: GiftedChat.append(previousState.messages, message),
+      }))
+    );
+    
+  }
+  componentWillUnmount() {
+    Fire.shared.off();
+  }
+}

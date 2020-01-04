@@ -1,20 +1,50 @@
-import React from 'react';
 import { Button } from 'native-base';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, TextInput, View, Dimensions } from 'react-native';
 
-export default function Home(props) {
-  return (
-    <View style={styles.container}>
-      <Text>This is Home Screen</Text>
-      <Button  style={{ backgroundColor: '#1A535C', padding:50, margin: 20, }} 
-        onPress={() => { props.navigation.navigate('ChatRoom') }}>
-        <Text style = {styles.getStartedButtonText}>Go to chat room!</Text>
-      </Button>
-    </View>
-  );
+class Home extends React.Component {
+  static navigationOptions = {
+    title: 'Guest',
+  };
+
+  state = {
+    name: '',
+  };
+
+  onPress = () =>
+    this.props.navigation.navigate('ChatRoom', { name: this.state.name });
+
+  onChangeText = name => this.setState({ name });
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text>Enter Your As Guest</Text>
+        <TextInput style = {styles.input}
+          underlineColorAndroid = "transparent"
+          placeholder = "Name"
+          placeholderTextColor = "grey"
+          onChangeText={this.onChangeText}
+          value={this.state.name}/>
+        <Button  style={{ backgroundColor: '#1A535C', padding:50, margin: 20, }} 
+          onPress={this.onPress}>
+          <Text style = {styles.getStartedButtonText}>Go to chat room!</Text>
+        </Button>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
+  input: {
+    marginBottom: 25,
+    marginLeft: 5,
+    height: 40,
+    width: Dimensions.get('window').width / 1.1,
+    borderColor: 'white',
+    borderBottomColor: 'black',
+    borderWidth: 1,
+ },
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -25,3 +55,5 @@ const styles = StyleSheet.create({
     color: 'white',
   }
 });
+
+export default Home;

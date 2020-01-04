@@ -3,34 +3,44 @@ import { Button } from 'native-base';
 import { StyleSheet, Text, View, TextInput, Dimensions, KeyboardAvoidingView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-export default function Intro(props) {
-  console.disableYellowBox = true;
+export default class Intro extends React.Component{
+  
+  constructor(props){
+    console.disableYellowBox = true;
+    super(props);
+  }
+  render() {
   return (
     <KeyboardAvoidingView style = {{ flex: 1 }} behavior="padding">
     <View style={styles.container}>
       <Ionicons name="ios-chatboxes" size={100} color="black" />
+
       <Text style = { styles.text }>Enter Email</Text>
       <TextInput style = {styles.input}
         underlineColorAndroid = "transparent"
         placeholder = "Email"
         placeholderTextColor = "grey"/>
+
       <Text style = { styles.text }>Enter Password</Text>
       <TextInput style = {styles.input}
         underlineColorAndroid = "transparent"
         placeholder = "Password"
         placeholderTextColor = "grey"
         secureTextEntry={true}/>
+
       <Button  style={ styles.submitButton } 
-        onPress={() => { props.navigation.navigate('Home') }}>
+        onPress={() => { this.props.navigation.navigate('Home') }}>
         <Text style = {styles.buttonText}>Login</Text>
       </Button>
+
       <Button  style={ styles.guestButton } 
-        onPress={() => { props.navigation.navigate('Home') }}>
+        onPress={() => { this.props.navigation.navigate('Home') }}>
         <Text style = {styles.buttonText}>Login As Guest</Text>
       </Button>
     </View>
     </KeyboardAvoidingView>
   );
+  }
 }
 
 const styles = StyleSheet.create({
