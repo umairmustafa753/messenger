@@ -9,6 +9,10 @@ export default class Intro extends React.Component{
     console.disableYellowBox = true;
     super(props);
   }
+
+  login = () => {
+    alert('Login coming soon. Please enter As a guest');
+  }
   render() {
   return (
     <KeyboardAvoidingView style = {{ flex: 1 }} behavior="padding">
@@ -29,7 +33,7 @@ export default class Intro extends React.Component{
         secureTextEntry={true}/>
 
       <Button  style={ styles.submitButton } 
-        onPress={() => { this.props.navigation.navigate('Home') }}>
+        onPress={ this.login }>
         <Text style = {styles.buttonText}>Login</Text>
       </Button>
 

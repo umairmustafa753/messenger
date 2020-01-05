@@ -3,7 +3,7 @@ import firebase from 'firebase';
 class Fire {
   constructor() {
     this.init();
-    this.observeAuth();
+    this.Auth();
   }
 
   init = () => {
@@ -22,7 +22,7 @@ class Fire {
     }
   };
 
-  observeAuth = () =>
+  Auth = () =>
     firebase.auth().onAuthStateChanged(this.onAuthStateChanged);
 
   onAuthStateChanged = user => {
@@ -56,15 +56,16 @@ class Fire {
     return message;
   };
 
-  on = callback =>
-    this.ref
-      .limitToLast(20)
-      .on('child_added', snapshot => callback(this.parse(snapshot)));
+  on = callback => this.ref.on('child_added', snapshot => callback(this.parse(snapshot)));
+  // on = callback => this.ref.on('child_added', snapshot => callback(on);
+  
+  
 
   get timestamp() {
     return firebase.database.ServerValue.TIMESTAMP;
   }
-  // send the message to the Backend
+
+
   send = messages => {
     for (let i = 0; i < messages.length; i++) {
       const { text, user } = messages[i];
@@ -75,11 +76,15 @@ class Fire {
       };
       this.append(message);
     }
-  };
+  }; 
+
+  delete = message => {
+    firebase.database().ref('messages/' + message._id).remove();
+  }
+  
 
   append = message => this.ref.push(message);
 
-  // close the connection to the Backend
   off() {
     this.ref.off();
   }
