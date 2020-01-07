@@ -1,9 +1,15 @@
 import firebase from 'firebase';
+import LinkedList from './linkList';
 
 class Fire {
-  constructor() {
+
+  constructor(props){
     this.init();
     this.Auth();
+  }
+
+  state = {
+    messages: new LinkedList(),
   }
 
   init = () => {
@@ -18,7 +24,6 @@ class Fire {
         appId: "1:614906054978:web:ecfb26491dd547a195a0db",
         measurementId: "G-KG3L2GNKD6"
       });
-      
     }
   };
 
@@ -53,13 +58,11 @@ class Fire {
       text,
       user,
     };
-    return message;
+    this.state.messages.add( message );
+    return this.state.messages.findById(message._id);
   };
 
   on = callback => this.ref.on('child_added', snapshot => callback(this.parse(snapshot)));
-  // on = callback => this.ref.on('child_added', snapshot => callback(on);
-  
-  
 
   get timestamp() {
     return firebase.database.ServerValue.TIMESTAMP;
@@ -79,7 +82,7 @@ class Fire {
   }; 
 
   delete = message => {
-    firebase.database().ref('messages/' + message._id).remove();
+    firebase.database().ref('messages/' + this.state.messages.removeAt(message._id)).remove();
   }
   
 

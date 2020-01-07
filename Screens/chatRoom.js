@@ -5,10 +5,11 @@ import {GiftedChat} from 'react-native-gifted-chat';
 
 export default class ChatRoom extends React.Component {
 
-  static navigationOptions = () => ({
-    title: 'GroupChat',
+  static navigationOptions = ({ navigation }) => ({
+    // title: (navigation.state.params || {}).code || 'groupChat!',
+    title: 'groupChat!',
   });
-
+  
   state = {
     messages: [],
   };
@@ -21,19 +22,17 @@ export default class ChatRoom extends React.Component {
   }
 
 
-  addDelete = (context, message) => { 
+  addDelete = (context, message) => {
     Alert.alert(
       'Delete',
       'Are you sure you want to delete the message ?',
       [
         {
           text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
         { text: 'OK', onPress: () => {
             Fire.shared.delete(message);
-            console.log('OK Pressed') 
             this.setState({ messages: [] }); 
             this.loadMessages();
           }
@@ -41,15 +40,15 @@ export default class ChatRoom extends React.Component {
       ],
       { cancelable: false }
     );
-    console.log( "context ", context, "message", message  );
   }
 
-  loadMessages = () => {
+  loadMessages = () => {    
     Fire.shared.on(message =>
       this.setState(previousState => ({
         messages: GiftedChat.append(previousState.messages, message),
       }))
     );
+    
   }
 
   componentDidMount() {
@@ -69,7 +68,6 @@ export default class ChatRoom extends React.Component {
             user={this.user}
             onLongPress={this.addDelete}
             />
-            
         </KeyboardAvoidingView>
         );
       }

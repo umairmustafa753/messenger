@@ -5,9 +5,9 @@ import { Ionicons } from '@expo/vector-icons';
 
 export default class Intro extends React.Component{
   
-  constructor(props){
+  constructor(){
     console.disableYellowBox = true;
-    super(props);
+    super();
   }
 
   login = () => {
