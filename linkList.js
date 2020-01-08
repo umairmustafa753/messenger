@@ -1,5 +1,4 @@
 function LinkedList() { 
-    let length = 0; 
     let head = null; 
   
     let Node = function(item){
@@ -17,13 +16,11 @@ function LinkedList() {
           head = node;
       } else {
           let currentNode = head;
-  
           while(currentNode.next){
               currentNode  = currentNode.next;
           }
           currentNode.next = node;
       }
-      length++;
     }; 
   
     this.indexOf = function(_id) {
@@ -59,20 +56,19 @@ function LinkedList() {
       let currentNode = head;
       let previousNode;
       let currentIndex = 0;
-      if (index < 0 || index >= length){
+      if (index < 0){
           return null
       }
       if(index === 0){
           head = currentNode.next;
       } else {
           while(currentIndex < index) {
-              currentIndex ++;
+              currentIndex++;
               previousNode = currentNode;
               currentNode = currentNode.next;
           }
           previousNode.next = currentNode.next
       }
-      length--;
       return currentNode.item._id;
     }
   } 

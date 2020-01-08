@@ -1,13 +1,12 @@
 import React from 'react';
 import {KeyboardAvoidingView, Platform, Alert } from 'react-native';
-import Fire from '../fire';
+import FireGlobal from '../fireGlobal';
 import {GiftedChat} from 'react-native-gifted-chat';
 
-export default class ChatRoom extends React.Component {
+export default class GroupChat extends React.Component {
 
-  static navigationOptions = ({ navigation }) => ({
-    // title: (navigation.state.params || {}).code || 'groupChat!',
-    title: 'groupChat!',
+  static navigationOptions = () => ({
+    title: 'Group Chat',
   });
   
   state = {
@@ -16,8 +15,8 @@ export default class ChatRoom extends React.Component {
 
   get user() {
     return {
-      name: 'Guest' + Fire.shared.uid,
-      _id: Fire.shared.uid,
+      name: 'Guest' + FireGlobal.shared.uid,
+      _id: FireGlobal.shared.uid,
     };
   }
 
@@ -32,7 +31,7 @@ export default class ChatRoom extends React.Component {
           style: 'cancel',
         },
         { text: 'OK', onPress: () => {
-            Fire.shared.delete(message);
+            FireGlobal.shared.delete(message);
             this.setState({ messages: [] }); 
             this.loadMessages();
           }
@@ -43,7 +42,7 @@ export default class ChatRoom extends React.Component {
   }
 
   loadMessages = () => {    
-    Fire.shared.on(message =>
+    FireGlobal.shared.on(message =>
       this.setState(previousState => ({
         messages: GiftedChat.append(previousState.messages, message),
       }))
@@ -55,7 +54,7 @@ export default class ChatRoom extends React.Component {
     this.loadMessages();
   }
   componentWillUnmount() {
-    Fire.shared.off();
+    FireGlobal.shared.off();
   }
 
   render() {
@@ -64,7 +63,7 @@ export default class ChatRoom extends React.Component {
         <KeyboardAvoidingView style={{flex: 1}} behavior="height" keyboardVerticalOffset={70} enabled>
            <GiftedChat
             messages={this.state.messages}
-            onSend={Fire.shared.send}
+            onSend={FireGlobal.shared.send}
             user={this.user}
             onLongPress={this.addDelete}
             />
@@ -74,7 +73,7 @@ export default class ChatRoom extends React.Component {
     return (
         <GiftedChat
           messages={this.state.messages}
-          onSend={Fire.shared.send}
+          onSend={FireGlobal.shared.send}
           user={this.user}
           onLongPress={this.addDelete}
         />

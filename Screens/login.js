@@ -17,7 +17,7 @@ export default class Intro extends React.Component{
   return (
     <KeyboardAvoidingView style = {{ flex: 1 }} behavior="padding">
     <View style={styles.container}>
-      <Ionicons name="ios-chatboxes" size={100} color="black" />
+      <Ionicons name="ios-chatboxes" size={100} color="#DBCAAD" />
 
       <Text style = { styles.text }>Enter Email</Text>
       <TextInput style = {styles.input}
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
  },
  submitButton: {
-    backgroundColor: '#1A535C',
+    backgroundColor: '#384E77',
     padding: 20,
     height: 40,
     marginLeft:  Dimensions.get('window').width / 1.5,

@@ -3,19 +3,20 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import Login from './Screens/login';
 import Home from './Screens/home';
-import ChatRoom from './Screens/chatRoom';
+import GroupChat from './Screens/groupChat';
 
 const RootStack = createStackNavigator(
   {
     Home: Home,
     Login: Login,
-    ChatRoom: ChatRoom,
+    GroupChat: GroupChat,
   },
   {
     initialRouteName: 'Login',
     defaultNavigationOptions: {
     headerStyle: {
-      backgroundColor: '#1A535C',
+      backgroundColor: '#384E77',
+      height: 120,
     },
     headerBackTitle: 'Back',
     headerTintColor: 'white',
