@@ -60,7 +60,7 @@ export default class GroupChat extends React.Component {
   render() {
       if( Platform.OS == "android" ){
         return (
-        <KeyboardAvoidingView style={{flex: 1}} behavior="height" keyboardVerticalOffset={70} enabled>
+        <KeyboardAvoidingView style={{flex: 1}} behavior="height" keyboardVerticalOffset={120} enabled>
            <GiftedChat
             messages={this.state.messages}
             onSend={FireGlobal.shared.send}

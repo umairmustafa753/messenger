@@ -3,7 +3,7 @@ import LinkedList from './linkList';
 
 class FireGlobal {
 
-  constructor(props){
+  constructor(){
     this.init();
     this.Auth();
   }
